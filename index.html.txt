@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ============================================================================
+  SmartHomeGuide — Single-file demo website
+  ----------------------------------------------------------------------------
+  NOTE FOR GOOGLE BLOGGER:
+  Blogger themes must be uploaded as an .xml template (Theme > Edit HTML).
+  A static multi-page site cannot be uploaded directly without conversion.
+  This file is fully self-contained: to use it, either
+    (a) host it as-is on any static host, or
+    (b) ask for the Blogger XML template version (same design, converted to
+        Blogger <b:skin> / widget format), or
+    (c) paste the inner <style> into Blogger's HTML gadget for a static page.
+  Replace YOUR_AMAZON_AFFILIATE_LINK placeholders with your real affiliate URLs.
+  ============================================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============ SEO META ============ -->
+<title>SmartHomeGuide — Smarter Choices for Your Home &amp; Kitchen</title>
+<meta name="description" content="Practical buying guides, product comparisons, and honest recommendations for home and kitchen products — air fryers, robot vacuums, kettles, coffee makers and more.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.smarthomeguide.com/"><!-- REPLACE with your real domain -->
+<meta name="theme-color" content="#1f7a4d">
+
+<!-- ============ OPEN GRAPH ============ -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SmartHomeGuide">
+<meta property="og:title" content="SmartHomeGuide — Smarter Choices for Your Home &amp; Kitchen">
+<meta property="og:description" content="Practical buying guides, product comparisons, and honest recommendations to help you choose with confidence.">
+<meta property="og:url" content="https://www.smarthomeguide.com/">
+<meta property="og:image" content="https://www.smarthomeguide.com/images/og-cover.jpg"><!-- REPLACE -->
+
+<!-- ============ TWITTER CARD ============ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SmartHomeGuide — Smarter Choices for Your Home &amp; Kitchen">
+<meta name="twitter:description" content="Practical buying guides, product comparisons, and honest recommendations to help you choose with confidence.">
+<meta name="twitter:image" content="https://www.smarthomeguide.com/images/og-cover.jpg"><!-- REPLACE -->
+
+<!-- ============ STRUCTURED DATA: ORGANIZATION + WEBSITE ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SmartHomeGuide",
+  "url": "https://www.smarthomeguide.com/",
+  "logo": "https://www.smarthomeguide.com/images/logo.png",
+  "slogan": "Smarter Choices for Your Home & Kitchen",
+  "email": "hello@smarthomeguide.com"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "SmartHomeGuide",
+  "url": "https://www.smarthomeguide.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.smarthomeguide.com/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- ================================================================
+     EMBEDDED STYLESHEET (in production, move to /css/style.css)
+     ================================================================ -->
+<style>
+/* ---------- 1. DESIGN TOKENS ---------- */
+:root{
+  --green:        #1f7a4d;
+  --green-dark:   #14573a;
+  --green-tint:   #e8f3ec;
+  --charcoal:     #23282d;
+  --gray-700:     #4a525a;
+  --gray-500:     #7a828a;
+  --gray-200:     #e4e7e9;
+  --gray-100:     #f1f3f4;
+  --gray-50:      #f7f8f8;
+  --white:        #ffffff;
+  --amber:        #d97706;
+  --radius:       14px;
+  --radius-sm:    9px;
+  --shadow-sm:    0 1px 3px rgba(35,40,45,.08);
+  --shadow-md:    0 6px 22px rgba(35,40,45,.10);
+  --shadow-lg:    0 14px 40px rgba(35,40,45,.14);
+  --maxw:         1180px;
+  --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+}
+
+/* ---------- 2. RESET / BASE ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);color:var(--charcoal);background:var(--white);
+     line-height:1.65;font-size:16px}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(31,122,77,.45);outline-offset:2px;border-radius:4px}
+h1,h2,h3,h4{line-height:1.25;color:var(--charcoal);font-weight:700}
+h1{font-size:clamp(1.9rem,4vw,2.9rem);letter-spacing:-.02em}
+h2{font-size:clamp(1.4rem,2.6vw,2rem);letter-spacing:-.01em}
+h3{font-size:1.15rem}
+p{color:var(--gray-700);max-width:70ch}
+ul,ol{padding-left:1.3em;color:var(--gray-700)}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--charcoal);color:#fff;
+  padding:.6rem 1rem;z-index:2000;border-radius:0 0 8px 0}
+.skip-link:focus{left:0;color:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+.muted{color:var(--gray-500)}
+.small{font-size:.85rem}
+
+/* ---------- 3. BUTTONS / BADGES ---------- */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.5rem;
+  border-radius:999px;font-weight:600;font-size:.95rem;border:2px solid transparent;
+  cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  text-decoration:none!important}
+.btn-primary{background:var(--green);color:#fff!important}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-outline{border-color:var(--gray-200);color:var(--charcoal)!important;background:#fff}
+.btn-outline:hover{border-color:var(--green);color:var(--green)!important;transform:translateY(-2px)}
+.btn-sm{padding:.45rem 1.05rem;font-size:.85rem}
+.badge{display:inline-block;padding:.22rem .7rem;border-radius:999px;font-size:.72rem;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--green-tint);
+  color:var(--green-dark)}
+
+/* ---------- 4. HEADER ---------- */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--gray-100)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  height:68px;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.logo{font-size:1.25rem;font-weight:800;color:var(--charcoal);display:flex;align-items:center;gap:.5rem}
+.logo:hover{text-decoration:none}
+.logo .dot{width:11px;height:11px;border-radius:50%;background:var(--green);display:inline-block}
+.logo span b{color:var(--green)}
+.main-nav ul{display:flex;gap:.25rem;list-style:none;padding:0}
+.main-nav a{display:block;padding:.5rem .85rem;border-radius:8px;color:var(--gray-700);
+  font-weight:600;font-size:.93rem;text-decoration:none;transition:background .15s,color .15s}
+.main-nav a:hover,.main-nav a.active{background:var(--gray-50);color:var(--green)}
+.header-actions{display:flex;align-items:center;gap:.6rem}
+.icon-btn{background:none;border:none;cursor:pointer;padding:.5rem;border-radius:8px;
+  color:var(--gray-700);display:inline-flex;align-items:center;justify-content:center}
+.icon-btn:hover{background:var(--gray-100)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:.6rem;background:none;border:none;cursor:pointer}
+.hamburger span{width:22px;height:2px;background:var(--charcoal);border-radius:2px;
+  transition:transform .25s,opacity .25s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* mobile nav panel */
+.mobile-nav{position:fixed;inset:68px 0 auto 0;background:#fff;border-bottom:1px solid var(--gray-100);
+  box-shadow:var(--shadow-lg);padding:1rem 20px 1.4rem;transform:translateY(-130%);
+  transition:transform .3s ease;z-index:990}
+.mobile-nav.open{transform:translateY(0)}
+.mobile-nav ul{list-style:none;padding:0}
+.mobile-nav a{display:block;padding:.8rem .4rem;font-weight:600;color:var(--charcoal);
+  border-bottom:1px solid var(--gray-100);text-decoration:none}
+.mobile-nav a:hover{color:var(--green)}
+
+/* ---------- 5. SEARCH OVERLAY ---------- */
+.search-overlay{position:fixed;inset:0;background:rgba(20,24,22,.55);z-index:1500;
+  display:none;align-items:flex-start;justify-content:center;padding:12vh 20px 20px}
+.search-overlay.open{display:flex}
+.search-panel{background:#fff;border-radius:var(--radius);width:100%;max-width:640px;
+  padding:1.4rem;box-shadow:var(--shadow-lg);max-height:70vh;display:flex;flex-direction:column}
+.search-panel input{width:100%;padding:.9rem 1.1rem;border:2px solid var(--gray-200);
+  border-radius:var(--radius-sm);font-size:1rem}
+.search-panel input:focus{border-color:var(--green)}
+.search-results{margin-top:1rem;overflow-y:auto}
+.search-result{display:block;padding:.8rem .9rem;border-radius:var(--radius-sm);text-decoration:none}
+.search-result:hover{background:var(--gray-50);text-decoration:none}
+.search-result .badge{margin-right:.5rem}
+.search-result strong{color:var(--charcoal)}
+.search-result small{display:block;color:var(--gray-500)}
+
+/* ---------- 6. HERO ---------- */
+.hero{background:linear-gradient(135deg,#f2f7f3 0%,#eef3ef 55%,#e7efe9 100%);overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:76px 0}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--green-dark);
+  background:var(--green-tint);padding:.35rem .9rem;border-radius:999px;margin-bottom:1.2rem}
+.hero p.lead{font-size:1.12rem;margin:1.1rem 0 1.8rem;color:var(--gray-700)}
+.hero-cta{display:flex;gap:.9rem;flex-wrap:wrap}
+.hero-stats{display:flex;gap:2.2rem;margin-top:2.4rem}
+.hero-stats div strong{display:block;font-size:1.4rem;color:var(--charcoal)}
+.hero-stats div span{font-size:.82rem;color:var(--gray-500)}
+.hero-art{position:relative}
+.hero-art .frame{border-radius:22px;overflow:hidden;box-shadow:var(--shadow-lg);
+  transform:rotate(1.2deg)}
+.hero-card{position:absolute;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-md);
+  padding:.8rem 1.1rem;font-size:.85rem;display:flex;align-items:center;gap:.6rem}
+.hero-card .stars{color:var(--amber);letter-spacing:.1em}
+.hero-card.a{bottom:-18px;left:-14px}
+.hero-card.b{top:-16px;right:-10px}
+
+/* ---------- 7. SECTION HEADERS ---------- */
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;
+  margin-bottom:2.2rem;flex-wrap:wrap}
+.section-head p{margin-top:.4rem}
+.kicker{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.45rem;display:block}
+
+/* ---------- 8. CARDS ---------- */
+.grid{display:grid;gap:1.4rem}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.card-img{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--gray-100)}
+.card-img svg{width:100%;height:100%;display:block;transition:transform .4s ease}
+.card:hover .card-img svg{transform:scale(1.05)}
+.card-img .badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.92)}
+.card-body{padding:1.3rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+.card-body h3 a{color:var(--charcoal);text-decoration:none}
+.card-body h3 a:hover{color:var(--green)}
+.card-meta{display:flex;align-items:center;gap:.8rem;font-size:.8rem;color:var(--gray-500);
+  margin-top:auto;padding-top:.5rem}
+.card .btn{margin-top:.6rem;align-self:flex-start}
+.excerpt{font-size:.92rem}
+.read-time{display:inline-flex;align-items:center;gap:.35rem}
+
+/* ---------- 9. TABLES ---------- */
+.table-scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--gray-100);
+  box-shadow:var(--shadow-sm);background:#fff}
+table.comparison{width:100%;border-collapse:collapse;min-width:720px;font-size:.92rem}
+table.comparison th{background:var(--gray-50);text-align:left;padding:.9rem 1.1rem;
+  font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-500)}
+table.comparison td{padding:.95rem 1.1rem;border-top:1px solid var(--gray-100);
+  color:var(--gray-700);vertical-align:middle}
+table.comparison tr:hover td{background:var(--gray-50)}
+.stars{color:var(--amber);letter-spacing:.08em;white-space:nowrap}
+
+/* ---------- 10. TRUST / STEPS ---------- */
+.bg-soft{background:var(--gray-50)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;counter-reset:step}
+.step{background:#fff;border-radius:var(--radius);padding:1.8rem 1.5rem;box-shadow:var(--shadow-sm);
+  position:relative}
+.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);
+  font-family:var(--serif);font-size:2.4rem;color:var(--green);opacity:.35;font-weight:700}
+.step h3{margin:.6rem 0 .4rem}
+.step p{font-size:.92rem}
+
+/* ---------- 11. DISCLOSURE ---------- */
+.disclosure{background:#fff8ec;border:1px solid #f2ddb8;border-radius:var(--radius-sm);
+  padding:.9rem 1.2rem;font-size:.85rem;color:#7a5a1e;display:flex;gap:.7rem;align-items:flex-start}
+.disclosure svg{flex:none;margin-top:2px}
+
+/* ---------- 12. NEWSLETTER ---------- */
+.newsletter{background:var(--green-dark);border-radius:22px;padding:3.2rem 2.5rem;
+  display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;color:#fff}
+.newsletter h2,.newsletter p{color:#fff}
+.newsletter p{opacity:.85;margin-top:.5rem}
+.newsletter-form{display:flex;gap:.6rem}
+.newsletter-form input{flex:1;padding:.85rem 1.1rem;border-radius:999px;border:none;font-size:.95rem}
+.newsletter-note{font-size:.75rem;opacity:.65;margin-top:.6rem}
+
+/* ---------- 13. FOOTER ---------- */
+.site-footer{background:#1c2126;color:#aeb6bd;margin-top:64px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.4rem;padding:3.4rem 0 2.4rem}
+.site-footer h4{color:#fff;font-size:.95rem;margin-bottom:1rem}
+.site-footer ul{list-style:none;padding:0}
+.site-footer li{margin-bottom:.55rem}
+.site-footer a{color:#aeb6bd;font-size:.9rem;text-decoration:none}
+.site-footer a:hover{color:#fff}
+.footer-brand p{font-size:.9rem;margin:.7rem 0 1.1rem;color:#8b949c;max-width:34ch}
+.social{display:flex;gap:.6rem}
+.social a{width:36px;height:36px;border-radius:50%;background:#2a3138;display:flex;
+  align-items:center;justify-content:center}
+.social a:hover{background:var(--green)}
+.footer-bottom{border-top:1px solid #2a3138;padding:1.3rem 0;display:flex;flex-wrap:wrap;
+  gap:.8rem;justify-content:space-between;font-size:.8rem;color:#7f8991}
+
+/* ---------- 14. ARTICLE TEMPLATE ---------- */
+.page{display:none}
+.page.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.crumbs{font-size:.82rem;color:var(--gray-500);padding:1.4rem 0 0}
+.crumbs a{color:var(--gray-500)}
+.crumbs a:hover{color:var(--green)}
+.article-hero{padding:1.4rem 0 2.6rem;max-width:820px}
+.article-hero .meta{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;
+  font-size:.85rem;color:var(--gray-500);margin:1rem 0 1.4rem}
+.author-chip{display:flex;align-items:center;gap:.55rem;font-weight:600;color:var(--charcoal)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.article-layout{display:grid;grid-template-columns:1fr 320px;gap:3rem;padding-bottom:4rem}
+.article-body h2{margin:2.4rem 0 .9rem;padding-top:.6rem}
+.article-body h3{margin:1.8rem 0 .6rem}
+.article-body p{margin-bottom:1.1rem}
+.article-body ul,.article-body ol{margin-bottom:1.2rem}
+.article-body li{margin-bottom:.4rem}
+.featured-img{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md);margin-bottom:2rem}
+.quick-box{background:var(--green-tint);border-left:4px solid var(--green);
+  border-radius:var(--radius-sm);padding:1.3rem 1.5rem;margin:1.6rem 0}
+.quick-box strong{color:var(--green-dark)}
+.toc{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);
+  padding:1.4rem 1.6rem;margin:1.6rem 0;box-shadow:var(--shadow-sm)}
+.toc ol{margin:0;padding-left:1.2em}
+.toc a{color:var(--gray-700);font-size:.93rem}
+.toc a:hover{color:var(--green)}
+.procons{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.4rem 0}
+.procons>div{border-radius:var(--radius);padding:1.2rem 1.4rem}
+.pros{background:var(--green-tint)}
+.cons{background:#fdf0ee}
+.pros h4{color:var(--green-dark);margin-bottom:.5rem}
+.cons h4{color:#b3402e;margin-bottom:.5rem}
+.faq-item{border-bottom:1px solid var(--gray-100);padding:1.1rem 0}
+.faq-item h3{cursor:pointer;display:flex;justify-content:space-between;gap:1rem;align-items:center}
+.faq-item h3::after{content:"+";color:var(--green);font-size:1.3rem;flex:none}
+.faq-item.open h3::after{content:"–"}
+.faq-item p{margin-top:.7rem}
+.sidebar{position:sticky;top:92px;align-self:start;display:flex;flex-direction:column;gap:1.4rem}
+.sidebar-box{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);
+  padding:1.4rem;box-shadow:var(--shadow-sm)}
+.sidebar-box h3{margin-bottom:.9rem}
+.sidebar-box a{display:block;padding:.55rem 0;color:var(--gray-700);font-size:.92rem;
+  border-bottom:1px solid var(--gray-100);text-decoration:none}
+.sidebar-box a:last-child{border-bottom:none}
+.sidebar-box a:hover{color:var(--green)}
+
+/* ---------- 15. PRODUCT REVIEW CARDS ---------- */
+.product-card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);overflow:hidden;margin:1.8rem 0}
+.product-card-inner{display:grid;grid-template-columns:280px 1fr;gap:1.8rem;padding:1.8rem}
+.product-visual{border-radius:var(--radius-sm);overflow:hidden;background:var(--gray-100);
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.product-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-start}
+.best-for{font-size:.78rem;font-weight:700;color:var(--green-dark);background:var(--green-tint);
+  padding:.28rem .8rem;border-radius:999px;display:inline-block;margin-bottom:.5rem}
+.verdict{background:var(--gray-50);border-radius:var(--radius-sm);padding:1rem 1.2rem;
+  margin-top:1.1rem;font-size:.92rem}
+.verdict strong{color:var(--charcoal)}
+
+/* ---------- 16. FORMS ---------- */
+.form-card{background:#fff;border:1px solid var(--gray-100);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);padding:2rem;max-width:640px}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-weight:600;font-size:.88rem;margin-bottom:.4rem}
+.field input,.field textarea,.field select{width:100%;padding:.8rem 1rem;
+  border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-size:.95rem;
+  font-family:inherit;background:#fff}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green);outline:none}
+.form-success{display:none;background:var(--green-tint);color:var(--green-dark);
+  border-radius:var(--radius-sm);padding:1rem 1.2rem;margin-top:1rem;font-weight:600}
+
+/* ---------- 17. STATIC PAGES ---------- */
+.static-page{max-width:780px;padding:2.5rem 0 4rem}
+.static-page h2{margin:2rem 0 .7rem}
+.static-page p,.static-page ul{margin-bottom:1rem}
+
+/* ---------- 18. RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .article-layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .product-card-inner{grid-template-columns:220px 1fr}
+}
+@media (max-width:768px){
+  .main-nav{display:none}
+  .hamburger{display:flex}
+  .hero-grid{grid-template-columns:1fr;padding:52px 0;gap:2.4rem}
+  .newsletter{grid-template-columns:1fr;padding:2.4rem 1.6rem}
+  .newsletter-form{flex-direction:column}
+  .newsletter-form .btn{justify-content:center}
+  .product-card-inner{grid-template-columns:1fr}
+  .product-visual{aspect-ratio:16/9}
+}
+@media (max-width:480px){
+  section{padding:48px 0}
+  .grid-3,.grid-4,.grid-2,.steps,.procons{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .hero-stats{gap:1.2rem;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<base target="_blank">
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#/" class="logo" aria-label="SmartHomeGuide home">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Smart<b>Home</b>Guide</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#/" data-nav="home">Home</a></li>
+        <li><a href="#/kitchen" data-nav="kitchen">Kitchen</a></li>
+        <li><a href="#/guides" data-nav="guides">Buying Guides</a></li>
+        <li><a href="#/reviews" data-nav="reviews">Product Reviews</a></li>
+        <li><a href="#/comparisons" data-nav="comparisons">Comparisons</a></li>
+        <li><a href="#/about" data-nav="about">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search articles">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu"
+              aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <ul>
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/kitchen">Kitchen</a></li>
+    <li><a href="#/guides">Buying Guides</a></li>
+    <li><a href="#/reviews">Product Reviews</a></li>
+    <li><a href="#/comparisons">Comparisons</a></li>
+    <li><a href="#/about">About</a></li>
+    <li><a href="#/contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true"
+     aria-label="Search SmartHomeGuide">
+  <div class="search-panel">
+    <input type="search" id="searchInput" placeholder="Search articles, guides, reviews…"
+           aria-label="Search articles, guides and reviews" autocomplete="off">
+    <div class="search-results" id="searchResults" aria-live="polite"></div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ================================================================
+     PAGE: HOME
+     ================================================================ -->
+<div class="page" data-page="home">
+
+  <!-- 1. HERO -->
+  <section class="hero" style="padding:0">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-eyebrow">Independent buying guides</span>
+          <h1>Make Smarter Choices for Your Home &amp; Kitchen</h1>
+          <p class="lead">Practical buying guides, product comparisons, and honest
+             recommendations to help you choose with confidence.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#/guides">Explore Buying Guides</a>
+            <a class="btn btn-outline" href="#/reviews">Latest Reviews</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>40+</strong><span>In-depth guides</span></div>
+            <div><strong>6</strong><span>Product categories</span></div>
+            <div><strong>100%</strong><span>Independent research</span></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="frame">
+            <!-- Decorative illustration: modern kitchen -->
+            <svg viewBox="0 0 560 420" role="img" aria-label="Illustration of a bright modern kitchen">
+              <rect width="560" height="420" fill="#dfe9e2"/>
+              <rect y="0" width="560" height="90" fill="#cfdccf"/>
+              <rect x="30" y="30" width="150" height="120" rx="8" fill="#ffffff" opacity=".85"/>
+              <rect x="200" y="30" width="150" height="120" rx="8" fill="#f3f7f4"/>
+              <rect x="370" y="30" width="160" height="120" rx="8" fill="#ffffff" opacity=".85"/>
+              <rect x="30" y="170" width="500" height="16" rx="4" fill="#b99b78"/>
+              <rect x="0" y="186" width="560" height="120" fill="#8a6f52"/>
+              <rect x="0" y="186" width="560" height="120" fill="#000" opacity=".08"/>
+              <rect x="40" y="220" width="110" height="86" rx="6" fill="#6e5843"/>
+              <rect x="180" y="220" width="110" height="86" rx="6" fill="#7a634c"/>
+              <rect x="320" y="220" width="110" height="86" rx="6" fill="#6e5843"/>
+              <rect x="460" y="220" width="70" height="86" rx="6" fill="#7a634c"/>
+              <ellipse cx="120" cy="180" rx="34" ry="8" fill="#c9c2b4"/>
+              <rect x="105" y="140" width="30" height="40" rx="6" fill="#3d4750"/>
+              <rect x="255" y="132" width="52" height="48" rx="8" fill="#1f7a4d"/>
+              <rect x="263" y="120" width="36" height="16" rx="6" fill="#14573a"/>
+              <circle cx="420" cy="162" r="20" fill="#e8b04b"/>
+              <rect x="0" y="306" width="560" height="114" fill="#efe9df"/>
+              <rect x="0" y="306" width="560" height="10" fill="#ddd3c2"/>
+              <rect x="60" y="330" width="90" height="90" rx="10" fill="#1f7a4d" opacity=".9"/>
+              <rect x="170" y="330" width="90" height="90" rx="10" fill="#2f8f5f"/>
+              <rect x="280" y="330" width="90" height="90" rx="10" fill="#1f7a4d" opacity=".75"/>
+              <rect x="390" y="330" width="90" height="90" rx="10" fill="#2f8f5f" opacity=".85"/>
+            </svg>
+          </div>
+          <div class="hero-card a"><span class="stars" aria-hidden="true">?????</span>
+            <span>Rated by research,<br>not hype</span></div>
+          <div class="hero-card b"><strong>Updated monthly</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. FEATURED CATEGORIES -->
+  <section aria-labelledby="cat-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Browse by room &amp; need</span>
+          <h2 id="cat-heading">Featured Categories</h2>
+        </div>
+      </div>
+      <div class="grid grid-3" id="categoryGrid"><!-- rendered by JS --></div>
+    </div>
+  </section>
+
+  <!-- 3. FEATURED BUYING GUIDES -->
+  <section class="bg-soft" aria-labelledby="guides-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Editor's picks</span>
+          <h2 id="guides-heading">Featured Buying Guides</h2>
+          <p>Our most helpful, reader-favourite guides right now.</p>
+        </div>
+        <a class="btn btn-outline btn-sm" href="#/guides">View all guides</a>
+      </div>
+      <div class="grid grid-3" id="featuredGuides"><!-- rendered by JS --></div>
+    </div>
+  </section>
+
+  <!-- 4. PRODUCT COMPARISON -->
+  <section aria-labelledby="compare-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Side by side</span>
+          <h2 id="compare-heading">This Week's Comparison: Compact Air Fryers</h2>
+          <p>Demo products shown — replace with your researched picks.</p>
+        </div>
+      </div>
+
+      <div class="disclosure" style="margin-bottom:1.4rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <span><strong>Affiliate disclosure:</strong> SmartHomeGuide may earn a commission
+        when you purchase through links on this page, at no additional cost to you.
+        Product information below is demo placeholder data.</span>
+      </div>
+
+      <div class="table-scroll">
+        <table class="comparison">
+          <thead>
+            <tr><th scope="col">Product</th><th scope="col">Best For</th>
+                <th scope="col">Key Feature</th><th scope="col">Rating</th>
+                <th scope="col">Price Range</th><th scope="col"></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DemoAir Compact 2.1 Qt</strong></td>
+              <td>Tiny kitchens &amp; dorms</td><td>Fits 8? of counter space</td>
+              <td class="stars">????? 4.2</td><td>$60–$80</td>
+              <td><a class="btn btn-primary btn-sm" href="YOUR_AMAZON_AFFILIATE_LINK"
+                 rel="nofollow sponsored noopener" target="_blank">Check Price</a></td>
+            </tr>
+            <tr>
+              <td><strong>DemoAir Mini Duo</strong></td>
+              <td>Couples</td><td>Dual-zone compact basket</td>
+              <td class="stars">????? 4.4</td><td>$80–$110</td>
+              <td><a class="btn btn-primary btn-sm" href="YOUR_AMAZON_AFFILIATE_LINK"
+                 rel="nofollow sponsored noopener" target="_blank">Check Price</a></td>
+            </tr>
+            <tr>
+              <td><strong>DemoAir Slim Digital</strong></td>
+              <td>Easy cleaning</td><td>Dishwasher-safe tray</td>
+              <td class="stars">????? 3.9</td><td>$50–$70</td>
+              <td><a class="btn btn-primary btn-sm" href="YOUR_AMAZON_AFFILIATE_LINK"
+                 rel="nofollow sponsored noopener" target="_blank">Check Price</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. LATEST ARTICLES -->
+  <section class="bg-soft" aria-labelledby="latest-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Fresh from the blog</span>
+          <h2 id="latest-heading">Latest Articles</h2>
+        </div>
+      </div>
+      <div class="grid grid-3" id="latestArticles"><!-- rendered by JS --></div>
+    </div>
+  </section>
+
+  <!-- 6. HOW WE CHOOSE PRODUCTS -->
+  <section aria-labelledby="method-heading">
+    <div class="wrap">
+      <div class="section-head" style="justify-content:center;text-align:center">
+        <div>
+          <span class="kicker">Our editorial method</span>
+          <h2 id="method-heading">How We Choose Products</h2>
+          <p style="margin:0.5rem auto 0">We research products based on features, usability,
+             customer feedback, value, and suitability for different types of households.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Research</h3><p>We study specifications, manufacturer
+           documentation, and long-term owner feedback across multiple sources.</p></div>
+        <div class="step"><h3>Compare</h3><p>We line up contenders side by side on the
+           features that actually matter for everyday use.</p></div>
+        <div class="step"><h3>Evaluate</h3><p>Each product is scored for value, durability,
+           ease of use, and how well it fits different household types.</p></div>
+        <div class="step"><h3>Recommend</h3><p>We shortlist honest picks for different needs
+           and budgets — and say who should skip each product.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. NEWSLETTER -->
+  <section aria-labelledby="news-heading" style="padding-top:0">
+    <div class="wrap">
+      <div class="newsletter">
+        <div>
+          <h2 id="news-heading">Get Smarter Home &amp; Kitchen Tips</h2>
+          <p>Join our newsletter for useful buying guides, product tips, and new reviews.</p>
+        </div>
+        <div>
+          <form class="newsletter-form" id="newsletterForm" novalidate>
+            <label for="newsletterEmail" class="skip-link">Email address</label>
+            <input type="email" id="newsletterEmail" name="email"
+                   placeholder="Enter your email" required>
+            <button class="btn btn-primary" type="submit">Subscribe</button>
+          </form>
+          <p class="newsletter-note" id="newsletterNote">No spam. Unsubscribe anytime.
+             Demo form — connect your email provider before launch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: KITCHEN CATEGORY
+     ================================================================ -->
+<div class="page" data-page="kitchen">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="crumbs"><a href="#/">Home</a> / Kitchen</div>
+      <div class="article-hero">
+        <span class="kicker">Category</span>
+        <h1>Kitchen</h1>
+        <p class="lead">Everything for the busiest room in the house — small appliances,
+           cookware, food storage, and clever tools that earn their counter space.</p>
+      </div>
+      <div class="section-head"><h2>Featured Kitchen Guides</h2></div>
+      <div class="grid grid-3" data-category-grid="Kitchen"></div>
+      <div class="section-head" style="margin-top:3.5rem"><h2>Related Categories</h2></div>
+      <div class="grid grid-3" id="relatedCategories"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: BUYING GUIDES
+     ================================================================ -->
+<div class="page" data-page="guides">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="crumbs"><a href="#/">Home</a> / Buying Guides</div>
+      <div class="article-hero">
+        <span class="kicker">All guides</span>
+        <h1>Buying Guides</h1>
+        <p class="lead">Step-by-step advice for choosing home and kitchen products with
+           confidence — no jargon, no hype, just what to look for.</p>
+      </div>
+      <div class="grid grid-3" id="allGuides"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: PRODUCT REVIEWS
+     ================================================================ -->
+<div class="page" data-page="reviews">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="crumbs"><a href="#/">Home</a> / Product Reviews</div>
+      <div class="article-hero">
+        <span class="kicker">Hands-on style breakdowns</span>
+        <h1>Product Reviews</h1>
+        <p class="lead">Detailed review-style breakdowns: who each product suits, key
+           features, pros, cons, and our honest verdict.</p>
+      </div>
+
+      <div class="disclosure" style="margin-bottom:1.6rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <span><strong>Affiliate disclosure:</strong> SmartHomeGuide may earn a commission
+        when you purchase through links on this page, at no additional cost to you.
+        Products shown use demo placeholder data until full research is published.</span>
+      </div>
+
+      <!-- Reusable product review cards -->
+      <article class="product-card" id="reviewCards"></article>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: COMPARISONS
+     ================================================================ -->
+<div class="page" data-page="comparisons">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="crumbs"><a href="#/">Home</a> / Comparisons</div>
+      <div class="article-hero">
+        <span class="kicker">Head-to-head</span>
+        <h1>Product Comparisons</h1>
+        <p class="lead">Side-by-side tables that make the differences obvious, so you can
+           pick the right product in minutes.</p>
+      </div>
+
+      <div class="disclosure" style="margin-bottom:1.4rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <span><strong>Affiliate disclosure:</strong> purchases made through links on this
+        page may earn us a commission at no additional cost to you.</span>
+      </div>
+
+      <h2 style="margin-bottom:1rem">Air Fryer vs. Toaster Oven: Which Should You Buy?</h2>
+      <div class="table-scroll" style="margin-bottom:3rem">
+        <table class="comparison">
+          <thead><tr><th scope="col">Criteria</th><th scope="col">Air Fryer</th>
+            <th scope="col">Toaster Oven</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Counter footprint</strong></td><td>Compact</td><td>Medium–large</td></tr>
+            <tr><td><strong>Best for</strong></td><td>Crispy foods, fast snacks</td><td>Toast, baking, reheating</td></tr>
+            <tr><td><strong>Capacity</strong></td><td>1–6 qt</td><td>4–8 slices / small trays</td></tr>
+            <tr><td><strong>Pre-heat time</strong></td><td>2–4 minutes</td><td>5–8 minutes</td></tr>
+            <tr><td><strong>Typical price</strong></td><td>$50–$180</td><td>$70–$300</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-bottom:1rem">Robot Vacuum vs. Stick Vacuum</h2>
+      <div class="table-scroll">
+        <table class="comparison">
+          <thead><tr><th scope="col">Criteria</th><th scope="col">Robot Vacuum</th>
+            <th scope="col">Stick Vacuum</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Effort</strong></td><td>Set-and-forget</td><td>Manual, quick</td></tr>
+            <tr><td><strong>Best floors</strong></td><td>Hard floors, low-pile carpet</td><td>All floor types</td></tr>
+            <tr><td><strong>Maintenance</strong></td><td>Bin, filters, brushes</td><td>Bin, filter, battery</td></tr>
+            <tr><td><strong>Typical price</strong></td><td>$150–$900</td><td>$80–$500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: ARTICLE TEMPLATE (rendered dynamically by JS)
+     ================================================================ -->
+<div class="page" data-page="article">
+  <div class="wrap">
+    <div class="crumbs" id="articleCrumbs"></div>
+    <div class="article-layout" style="padding-top:1rem">
+      <article id="articleContent" class="article-body"><!-- rendered by JS --></article>
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="sidebar-box" id="relatedBox"></div>
+        <div class="sidebar-box">
+          <h3>Newsletter</h3>
+          <p class="small muted" style="margin-bottom:.8rem">New guides, once a week. No spam.</p>
+          <a class="btn btn-primary btn-sm" href="#/" onclick="setTimeout(()=>document.getElementById('newsletterEmail').focus(),400)">Subscribe</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE: ABOUT
+     ================================================================ -->
+<div class="page" data-page="about">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="static-page">
+        <div class="crumbs"><a href="#/">Home</a> / About</div>
+        <h1 style="margin:1rem 0">About SmartHomeGuide</h1>
+        <h2>What SmartHomeGuide is</h2>
+        <p>SmartHomeGuide is an independent editorial website that helps you choose home
+           and kitchen products with confidence. We publish buying guides, comparisons,
+           and practical recommendations built on careful research — not sponsored placements.</p>
+        <h2>Why this website exists</h2>
+        <p>Online marketplaces list thousands of nearly identical products. Our job is to
+           cut through the noise: we compare specifications, study long-term owner feedback,
+           and translate it all into plain-English advice that fits real households and
+           real budgets.</p>
+        <h2>How we research products</h2>
+        <ul>
+          <li>We study manufacturer specifications and documentation.</li>
+          <li>We analyze patterns in verified owner feedback across multiple retail platforms.</li>
+          <li>We compare features that matter for everyday use — capacity, footprint, noise,
+              cleaning effort, and running costs.</li>
+          <li>We score value and durability, then shortlist picks for different needs.</li>
+        </ul>
+        <h2>Our editorial principles</h2>
+        <ul>
+          <li>No fake claims — we never say "we tested" a product unless we actually did.</li>
+          <li>No invented awards, ratings, or expert credentials.</li>
+          <li>Every recommendation explains who should <em>skip</em> the product, too.</li>
+          <li>Content is reviewed and updated as product lines change.</li>
+        </ul>
+        <h2>How affiliate links work</h2>
+        <p>SmartHomeGuide participates in the Amazon Associates Program. When you buy through
+           links on this site, we may earn a commission at no additional cost to you. Affiliate
+           income never changes our rankings — picks are made first, links are added after.
+           Read our full <a href="#/disclosure">Affiliate Disclosure</a>.</p>
+        <h2>Our commitment</h2>
+        <p>Useful, transparent information first. If a guide doesn't help you make a better
+           decision, it doesn't get published.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: CONTACT
+     ================================================================ -->
+<div class="page" data-page="contact">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="static-page">
+        <div class="crumbs"><a href="#/">Home</a> / Contact</div>
+        <h1 style="margin:1rem 0 0.5rem">Contact Us</h1>
+        <p style="margin-bottom:1.6rem">Questions, corrections, or product suggestions?
+           We'd love to hear from you. Prefer email? Reach us at
+           <strong>hello@smarthomeguide.com</strong> (placeholder — replace with your address).</p>
+        <form class="form-card" id="contactForm" novalidate>
+          <div class="field">
+            <label for="cName">Name</label>
+            <input id="cName" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="cSubject">Subject</label>
+            <select id="cSubject" name="subject" required>
+              <option value="">Choose a topic…</option>
+              <option>Question about a guide</option>
+              <option>Correction</option>
+              <option>Product suggestion</option>
+              <option>Advertising / partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" name="message" rows="6" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send Message</button>
+          <p class="form-success" id="contactSuccess" role="status">Thank you! Your message
+             has been noted. (Demo form — connect a form backend before launch.)</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: AFFILIATE DISCLOSURE
+     ================================================================ -->
+<div class="page" data-page="disclosure">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="static-page">
+        <div class="crumbs"><a href="#/">Home</a> / Affiliate Disclosure</div>
+        <h1 style="margin:1rem 0">Affiliate Disclosure</h1>
+        <p><strong>Last updated: September 2026.</strong></p>
+        <p>SmartHomeGuide participates in the Amazon Services LLC Associates Program, an
+           affiliate advertising program designed to provide a means for sites to earn
+           advertising fees by advertising and linking to Amazon.com.</p>
+        <p>This means that when you click on certain links on this website and make a
+           purchase, we may earn a commission — at no additional cost to you. Product prices
+           and availability are accurate as of the date/time indicated and are subject to change.</p>
+        <h2>Does this affect our recommendations?</h2>
+        <p>No. Our picks are chosen through research first. Affiliate links are added after
+           editorial decisions are made, and commissions never influence rankings, ratings,
+           or verdicts.</p>
+        <h2>Demo content notice</h2>
+        <p>Some product listings on this site currently use clearly marked demo/placeholder
+           information until full research is published. Demo products are labelled as such.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: PRIVACY POLICY (placeholder — replace with your legal text)
+     ================================================================ -->
+<div class="page" data-page="privacy">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="static-page">
+        <div class="crumbs"><a href="#/">Home</a> / Privacy Policy</div>
+        <h1 style="margin:1rem 0">Privacy Policy</h1>
+        <p><strong>Placeholder page.</strong> Replace this section with your full,
+           legally reviewed privacy policy before launch.</p>
+        <h2>What we collect</h2>
+        <p>We may collect information you voluntarily provide (e.g., newsletter email
+           address) and standard analytics data (pages visited, browser type, approximate
+           location) to improve the site.</p>
+        <h2>Cookies</h2>
+        <p>This site may use cookies for analytics and affiliate tracking. You can disable
+           cookies in your browser settings.</p>
+        <h2>Contact</h2>
+        <p>For privacy questions, contact hello@smarthomeguide.com (placeholder).</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================================
+     PAGE: TERMS (placeholder — replace with your legal text)
+     ================================================================ -->
+<div class="page" data-page="terms">
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="static-page">
+        <div class="crumbs"><a href="#/">Home</a> / Terms</div>
+        <h1 style="margin:1rem 0">Terms of Use</h1>
+        <p><strong>Placeholder page.</strong> Replace this section with your full,
+           legally reviewed terms before launch.</p>
+        <h2>Content</h2>
+        <p>All content is provided for general information only and does not constitute
+           professional advice. Product information, prices, and availability may change;
+           always verify details with the retailer before purchasing.</p>
+        <h2>Intellectual property</h2>
+        <p>Site content is the property of SmartHomeGuide and may not be reproduced without
+           written permission.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#/" class="logo" style="color:#fff">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Smart<b style="color:#5dbf8b">Home</b>Guide</span>
+        </a>
+        <p>Smarter Choices for Your Home &amp; Kitchen</p>
+        <div class="social" aria-label="Social media">
+          <a href="#" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1 2h6.5l4.4 5.9L18.9 2zm-1.1 18.1h1.7L7.6 3.8H5.7l12.1 16.3z"/></svg></a>
+          <a href="#" aria-label="Pinterest"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.9 6.4 9.3-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.5 1.9 1.9 0 3.3-2 3.3-4.8 0-2.5-1.8-4.3-4.4-4.3-3 0-4.7 2.2-4.7 4.5 0 .9.3 1.9.8 2.4.1.1.1.2.1.3l-.3 1.1c0 .2-.1.2-.3.1-1.2-.6-2-2.4-2-3.8 0-3.1 2.3-6 6.6-6 3.5 0 6.1 2.5 6.1 5.7 0 3.4-2.2 6.2-5.2 6.2-1 0-2-.5-2.3-1.2l-.6 2.4c-.2.9-.8 2-1.2 2.6.9.3 1.9.4 2.9.4 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.6 3.6 12 3.6 12 3.6s-4.6 0-7.7.3c-.5.1-1.5.1-2.4 1-.7.7-.9 2.3-.9 2.3S.8 9.1.8 11v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.9.9 2 .9 2.6 1 1.9.2 7.5.3 7.5.3s4.6 0 7.7-.4c.5-.1 1.5-.1 2.4-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8V11c0-1.9-.2-3.8-.2-3.8zM9.8 15V8.4l6.2 3.3-6.2 3.3z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#/">Home</a></li>
+          <li><a href="#/guides">Buying Guides</a></li>
+          <li><a href="#/reviews">Product Reviews</a></li>
+          <li><a href="#/comparisons">Comparisons</a></li>
+          <li><a href="#/kitchen">Kitchen</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/contact">Contact</a></li>
+          <li><a href="#/privacy">Privacy Policy</a></li>
+          <li><a href="#/terms">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Transparency</h4>
+        <ul>
+          <li><a href="#/disclosure">Affiliate Disclosure</a></li>
+          <li><a href="#/about">How We Choose Products</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> SmartHomeGuide. All rights reserved.</span>
+      <span>SmartHomeGuide participates in the Amazon Associates Program.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     EMBEDDED JAVASCRIPT (in production, move to /js/main.js + search.js)
+     ================================================================ -->
+<script>
+/* ==================================================================
+   SmartHomeGuide — main.js + search.js (combined, framework-free)
+   ================================================================== */
+(function(){
+"use strict";
+
+/* ---------- A. DATA: categories & demo articles ---------- */
+/* To add a new article: push an object here + add full content to
+   ARTICLE_CONTENTS below. The router, cards and search update automatically. */
+var CATEGORIES = [
+  {name:"Home",       desc:"Essentials for every room, from comfort to cleaning.", hue:"#2f6f4f"},
+  {name:"Kitchen",    desc:"Small appliances, cookware and tools that earn their space.", hue:"#8a5a2e"},
+  {name:"Cleaning",   desc:"Vacuums, mops and gadgets that cut chores down to size.", hue:"#3a6ea5"},
+  {name:"Storage & Organization", desc:"Smart systems to tame clutter in any size home.", hue:"#7a4e8a"},
+  {name:"Smart Home", desc:"Beginner-friendly devices that actually make life easier.", hue:"#2e7d84"},
+  {name:"Small Appliances", desc:"Compact helpers for quick, everyday cooking tasks.", hue:"#a05a3a"}
+];
+
+var ARTICLES = [
+  {slug:"air-fryers-small-kitchens", title:"Best Air Fryers for Small Kitchens: What to Look For",
+   category:"Kitchen", tag:"Buying Guide", readTime:9,
+   date:"Sep 2, 2026", updated:"Sep 8, 2026", hue:"#c96f3b",
+   excerpt:"Counter space is precious. Here's how to pick an air fryer that cooks well and still leaves room to prep."},
+  {slug:"robot-vacuum-guide", title:"How to Choose the Right Robot Vacuum",
+   category:"Cleaning", tag:"Buying Guide", readTime:11,
+   date:"Aug 26, 2026", updated:"Sep 5, 2026", hue:"#3a6ea5",
+   excerpt:"Navigation, suction, mopping, pet hair — the features that actually matter, explained simply."},
+  {slug:"electric-kettles", title:"Best Electric Kettles for Everyday Use",
+   category:"Kitchen", tag:"Buying Guide", readTime:7,
+   date:"Aug 20, 2026", updated:"Sep 1, 2026", hue:"#4a7ea5",
+   excerpt:"Fast boiling, temperature control, and quiet operation — what separates a great kettle from a mediocre one."},
+  {slug:"kitchen-storage-small-spaces", title:"Kitchen Storage Ideas for Small Spaces",
+   category:"Storage & Organization", tag:"Ideas", readTime:8,
+   date:"Aug 15, 2026", updated:"Aug 30, 2026", hue:"#7a4e8a",
+   excerpt:"Ten practical, renter-friendly ways to double your usable kitchen storage without remodeling."},
+  {slug:"choose-coffee-maker", title:"How to Choose a Coffee Maker",
+   category:"Kitchen", tag:"Buying Guide", readTime:10,
+   date:"Aug 10, 2026", updated:"Aug 28, 2026", hue:"#6b4226",
+   excerpt:"Drip, pour-over, espresso, pod — match the machine to your mornings, not the marketing."},
+  {slug:"food-storage-containers", title:"Best Food Storage Containers for Meal Prep",
+   category:"Kitchen", tag:"Buying Guide", readTime:8,
+   date:"Aug 5, 2026", updated:"Aug 22, 2026", hue:"#2e8b57",
+   excerpt:"Glass vs. plastic, leak-proof seals, and stackability — the containers that survive a busy week."},
+  {slug:"smart-home-beginners", title:"Smart Home Devices Worth Buying for Beginners",
+   category:"Smart Home", tag:"Buying Guide", readTime:9,
+   date:"Jul 29, 2026", updated:"Aug 18, 2026", hue:"#2e7d84",
+   excerpt:"Skip the gimmicks. The five starter devices that deliver real convenience from day one."},
+  {slug:"choose-blender", title:"How to Choose a Blender for Your Kitchen",
+   category:"Small Appliances", tag:"Buying Guide", readTime:8,
+   date:"Jul 22, 2026", updated:"Aug 12, 2026", hue:"#a05a3a",
+   excerpt:"Wattage, jars, and cleanup — a plain-English guide to picking the right blender for what you actually make."}
+];
+
+/* ---------- B. DEMO ARTICLE BODIES (original demo content) ---------- */
+/* Full bodies are provided for all 8 articles. Replace demo product
+   blocks with your researched picks before going live. */
+var ARTICLE_CONTENTS = {
+"air-fryers-small-kitchens":{
+ intro:"A good air fryer can crisp, roast, and reheat with almost no oil — but most models are built for big kitchens. If your counter space is measured in inches, not feet, the usual 'bigger is better' advice doesn't apply. This guide covers what actually matters when you're buying small.",
+ quickAnswer:"For most small kitchens, choose a compact air fryer (2–4 qt) with a footprint under 10 inches, a dishwasher-safe basket, and simple manual controls. Digital touch panels look nice, but dials are easier to wipe clean and less likely to confuse guests.",
+ toc:["Capacity vs. counter space","The features that matter","Common mistakes to avoid","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Capacity vs. counter space",p:"A 2-quart basket cooks for one or two people; 3–4 quarts handles a small family. Measure your counter <em>and</em> your cabinet clearance before buying — remember the basket pulls out toward you, adding 8–10 inches of needed depth.",list:["2 qt: singles, couples, dorm rooms","3–4 qt: 2–3 people, small families","Check the pull-out clearance, not just the width"]},
+  {h:"The features that matter",p:"In compact models, a few features separate the great from the frustrating:",list:["Dishwasher-safe basket — cleaning effort is the #1 long-term complaint","Even heating — compact baskets can crowd food; a 400W+ element helps","Cool-touch exterior if the unit sits under cabinets","A keep-warm function, since small batches get cold fast"]},
+  {h:"Common mistakes to avoid",p:"Don't buy the absolute smallest model to save two inches of space — a cramped basket means cooking in three batches. And skip bundled '10-in-1' modes you'll never use; they add cost, not capability."}
+ ],
+ tableTitle:"Demo comparison: compact air fryers",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoAir Compact 2.1 Qt","Tiny kitchens","Fits 8\" of counter","????? 4.2","$60–$80"],
+        ["DemoAir Mini Duo","Couples","Dual-zone basket","????? 4.4","$80–$110"],
+        ["DemoAir Slim Digital","Easy cleaning","Dishwasher-safe tray","????? 3.9","$50–$70"]],
+ faqs:[["Is a small air fryer worth it?","Yes, if you cook for one or two people and value counter space. You'll cook in smaller batches, but pre-heat is faster too."],
+       ["Can I put an air fryer under a cabinet?","Only with 4–5 inches of clearance above, and never pushed flush against the wall — air fryers need rear ventilation."]],
+ verdict:"Pick a 2.5–3.5 qt compact model with a dishwasher-safe basket and honest dimensions listed. Everything else is a bonus."
+},
+"robot-vacuum-guide":{
+ intro:"Robot vacuums range from $150 bump-and-go models to $900 self-emptying mappers. The right choice depends less on budget and more on your floors, pets, and tolerance for maintenance. Here's how to decide.",
+ quickAnswer:"Hard floors and no pets? A basic navigation model under $250 is plenty. Pets or mixed flooring? Prioritize strong suction, a rubber brush roll, and self-emptying if you can swing it. Thick carpet? Consider whether a robot is right at all — a stick vacuum may serve you better.",
+ toc:["Mapping vs. random navigation","Suction and brush rolls","The pet hair question","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Mapping vs. random navigation",p:"Random-navigation bots bounce around until the battery dies — fine for studio apartments. LiDAR or camera mapping builds a floor plan, cleans in orderly rows, and lets you no-go-zone the dog's water bowl.",list:["Random: cheapest, best for single rooms","LiDAR mapping: works in the dark, most reliable","Camera mapping: good, but needs light"]},
+  {h:"Suction and brush rolls",p:"Look for Pa ratings above 2,500 for carpet, and rubber brush rolls instead of bristles if anyone in the house has long hair — hair wraps around bristles and kills performance within weeks."},
+  {h:"The pet hair question",p:"Pet owners should treat self-emptying as near-essential. A full bin of pet hair loses suction fast, and emptying it by hand daily gets old quickly. Also check for HEPA filtration if allergies are a factor."}
+ ],
+ tableTitle:"Demo comparison: robot vacuums",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoBot S1","Apartments","LiDAR mapping","????? 4.3","$180–$230"],
+        ["DemoBot Pet Pro","Pet owners","Self-empty base","????? 4.5","$350–$450"],
+        ["DemoBot Mop Duo","Hard floors","Vacuum + mop","????? 3.8","$280–$380"]],
+ faqs:[["Do robot vacuums work on carpet?","On low and medium-pile carpet, yes — modern mid-range models handle it well. High-pile and shag remain a challenge for any robot."],
+       ["How often do I need to maintain one?","Plan on 10 minutes weekly: empty the bin (or check the base), cut hair off the brush, and wipe sensors."]],
+ verdict:"Apartment + hard floors = save your money. Home + pets = invest in mapping, rubber brushes, and self-emptying."
+},
+"electric-kettles":{
+ intro:"An electric kettle is one of the few appliances you'll use daily for years, so small differences — pour control, noise, build quality — compound fast. Here's what to look for.",
+ quickAnswer:"For everyday use, a 1.7L stainless kettle with ~1500W power, a stay-cool handle, and a wide lid for easy descaling is the sweet spot. Add variable temperature only if you drink green tea or make pour-over coffee.",
+ toc:["Power and boil speed","Temperature control: who needs it?","Materials and durability","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Power and boil speed",p:"1500W boils a full 1.7L in about 4 minutes; 1000W takes closer to 7. If you mostly boil one or two cups, speed matters less than accurate minimum-fill lines that let you heat only what you need."},
+  {h:"Temperature control: who needs it?",p:"Variable-temperature kettles hold water at 160–205°F — essential for green and white teas, and handy for pour-over coffee. If you only drink black tea and instant coffee, save the money.",list:["Green/white tea drinkers: yes","Pour-over coffee: yes, ideally ±5°F accuracy","Everyone else: skip it"]},
+  {h:"Materials and durability",p:"Stainless interiors outlast plastic for taste and staining. Check that the filter is removable for descaling, and that the lid opens wide enough to fit a hand — narrow lids are a cleaning headache."}
+ ],
+ tableTitle:"Demo comparison: electric kettles",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoKettle Rapid 1.7L","Fast boiling","1500W, 4-min boil","????? 4.4","$30–$45"],
+        ["DemoKettle Temp Pro","Tea lovers","±5°F temp control","????? 4.5","$60–$90"],
+        ["DemoKettle Quiet Pour","Open-plan homes","Low-noise element","????? 4.0","$40–$60"]],
+ faqs:[["Are plastic kettles safe?","Food-grade BPA-free plastic is generally considered safe, but stainless interiors avoid the question entirely and don't retain flavors."],
+       ["How often should I descale?","Monthly if you have hard water, every 2–3 months otherwise. Vinegar or citric acid both work."]],
+ verdict:"A well-built 1.7L stainless kettle is a boring, brilliant purchase. Pay for build quality, not features you'll never touch."
+},
+"kitchen-storage-small-spaces":{
+ intro:"You don't need a bigger kitchen — you need to reclaim the space you're already wasting. These ten ideas work in rentals, cost little, and don't require a single power tool.",
+ quickAnswer:"Start with the 'golden triangle' walls: add a rail for utensils and lids, use the inside of cabinet doors for lids and wraps, and switch mismatched containers to one stackable set. Vertical space is free real estate.",
+ toc:["Think in vertical layers","The inside of doors counts","One container system to rule them all","Demo product picks","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Think in vertical layers",p:"Every empty wall above counter height is storage waiting to happen. Adhesive hooks, a single rail with S-hooks, and a shelf above the door frame buy you square feet without drilling into tile."},
+  {h:"The inside of doors counts",p:"Cabinet door organizers hold pot lids, cutting boards, foil boxes, and cleaning gloves. Use removable adhesive strips in rentals — they hold surprisingly well on smooth surfaces."},
+  {h:"One container system to rule them all",p:"Half the battle is visual chaos. One stackable, uniform container set (square beats round for shelf efficiency) makes cabinets look organized and actually keeps food fresher.",list:["Square containers maximize shelf space","Uniform lids: one lid fits all","Glass for daily use, light plastic for freezer"]}
+ ],
+ tableTitle:"Demo product picks: storage",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoStore Stack Set","Pantry","One-lid-fits-all","????? 4.5","$25–$40"],
+        ["DemoStore Door Rack","Cabinet doors","No-drill adhesive","????? 4.2","$15–$25"],
+        ["DemoStore Wall Rail","Utensils","Rail + 6 hooks","????? 4.0","$12–$20"]],
+ faqs:[["How do I organize a kitchen with no pantry?","Convert one upper cabinet to 'pantry status' with shelf risers and a lazy Susan, and store bulk goods in a rolling cart that tucks beside the fridge."],
+       ["Glass or plastic containers?","Glass for everyday leftovers (stain- and odor-proof), lighter BPA-free plastic for anything that goes to the freezer or lunch bag."]],
+ verdict:"Do one zone at a time: a rail this weekend, containers next. Small, finished upgrades beat a grand plan that never happens."
+},
+"choose-coffee-maker":{
+ intro:"The best coffee maker is the one that matches your actual mornings — not the one with the most buttons. Answer three questions about your routine and the choice makes itself.",
+ quickAnswer:"Rushed weekday mornings? Get an automatic drip with a thermal carafe. Care about flavor above all? A pour-over setup costs less and tastes better. Want café drinks? Only then consider an espresso machine — they're the most work and the most cleanup.",
+ toc:["Three questions to ask yourself","Drip machines: what matters","Pour-over: better coffee, more effort","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Three questions to ask yourself",p:"1) How many cups do you drink before 8am? 2) How much counter space can you dedicate permanently? 3) Do you enjoy the ritual, or just want coffee to appear? Your answers eliminate most of the market immediately."},
+  {h:"Drip machines: what matters",p:"Skip the gimmick brew-strength buttons. What matters: a thermal carafe (hot plates cook coffee bitter within 30 minutes), showerhead-style water dispersion for even extraction, and a machine that fits your mug height."},
+  {h:"Pour-over: better coffee, more effort",p:"A $30 dripper and kettle produce coffee that beats most $150 machines — but you're the timer, the scale, and the cleanup crew. Great for one or two careful cups; impractical for a household of four."}
+ ],
+ tableTitle:"Demo comparison: coffee makers",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoBrew Thermal 12","Households","Thermal carafe","????? 4.3","$60–$90"],
+        ["DemoBrew Pour Kit","Flavor seekers","Full manual control","????? 4.6","$30–$50"],
+        ["DemoBrew Barista","Espresso drinks","15-bar pump","????? 4.0","$150–$250"]],
+ faqs:[["Is an expensive coffee maker worth it?","Above ~$100 for drip machines, you're paying for convenience features (programming, built-in grinders), not better coffee. Spend the difference on better beans first."],
+       ["Pod machines: yay or nay?","Convenient but expensive per cup and wasteful. Fine for occasional guests; as a daily driver, a drip machine pays for itself in months."]],
+ verdict:"Buy for your worst, busiest morning — not your ideal slow Sunday. The machine you'll actually use every day is the right one."
+},
+"food-storage-containers":{
+ intro:"The right container set makes meal prep faster, food last longer, and your fridge look like an adult lives there. Here's what separates a set you'll love from one that becomes lid-chaos by week two.",
+ quickAnswer:"Choose one rectangular glass set with locking, leak-proof lids for daily use, plus a few lightweight plastic pieces for freezing and lunches. Uniform lid sizes matter more than any single feature.",
+ toc:["Glass vs. plastic, honestly","The seal is everything","Sizes and shapes that stack","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Glass vs. plastic, honestly",p:"Glass doesn't stain, doesn't hold odors, and goes from fridge to microwave safely — but it's heavy and breakable. Plastic is lighter and cheaper but scars from tomato sauce and pesto. Most happy meal-preppers use glass for home, plastic for transport."},
+  {h:"The seal is everything",p:"A container is only as good as its gasket. Look for removable silicone seals you can wash (mold city otherwise) and four locking tabs that click audibly. 'Leak-proof' claims should be backed by real owner reports of soup-level tests."},
+  {h:"Sizes and shapes that stack",p:"Square and rectangular containers waste ~25% less shelf space than round ones. A good starter set: two 1-cup, four 2-cup, two 4-cup, and one 8-cup. Anything smaller is a lid with delusions."}
+ ],
+ tableTitle:"Demo comparison: container sets",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoFresh Glass 12pc","Daily meal prep","Oven-safe glass","????? 4.5","$30–$45"],
+        ["DemoFresh LeakLock","Soups & sauces","Silicone gasket seal","????? 4.4","$25–$40"],
+        ["DemoFresh Lite 20pc","Lunches","Lightweight, cheap","????? 4.1","$15–$25"]],
+ faqs:[["Can I microwave glass containers?","Yes, with the lid ajar or off. Avoid thermal shock — don't move a container straight from freezer to a hot microwave."],
+       ["How do I stop lids from disappearing?","Buy sets with one universal lid size, and store lids vertically in a bin. Matching-lid chaos is a design problem, not a you problem."]],
+ verdict:"One good glass set, one cheap plastic set for the road, and a lid bin. That's the whole system."
+},
+"smart-home-beginners":{
+ intro:"Smart home marketing loves a futuristic fantasy. The reality is simpler: a few well-chosen devices genuinely save time and worry. Here are the five worth starting with — and the ones to skip.",
+ quickAnswer:"Start with a smart plug (cheapest useful device), a video doorbell or camera for security, a smart thermostat for savings, smart bulbs for convenience, and one smart speaker as the voice hub. Skip fridges, ovens, and kettles with apps.",
+ toc:["Start with a smart plug","Security that pays for itself","Lighting: the daily win","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Start with a smart plug",p:"A $15 smart plug turns any lamp, fan, or coffee maker into a scheduled, voice-controlled device. It's the lowest-risk way to learn the ecosystem (and discover what you actually want to automate) before buying anything bigger."},
+  {h:"Security that pays for itself",p:"A video doorbell answers 'was that a package or a possum?' from anywhere. Beyond convenience, insurers in many regions offer discounts for monitored security — the device can partly pay for itself.",list:["Check local storage vs. subscription costs before buying","Battery models install in minutes; wired never need charging"]},
+  {h:"Lighting: the daily win",p:"Smart bulbs earn their keep with routines: porch light at sunset, hallway dimmed at midnight, everything off when you say goodnight. Choose one ecosystem (Matter-compatible devices keep options open) and stick with it."}
+ ],
+ tableTitle:"Demo comparison: starter devices",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoPlug Mini","First device","Schedules + voice","????? 4.4","$12–$18"],
+        ["DemoBell Cam","Entryway security","2-way talk","????? 4.3","$80–$130"],
+        ["DemoBulb 4-pack","Whole-room lighting","Matter compatible","????? 4.5","$30–$50"]],
+ faqs:[["Do smart home devices spy on you?","Buy from reputable brands, enable two-factor authentication, and mute microphones when not needed. Local-processing devices (no cloud) offer the strongest privacy."],
+       ["Matter, Zigbee, Wi-Fi — which should I pick?","Matter is the new universal standard and the safest long-term bet; it works over Wi-Fi and Thread. Wi-Fi devices are simplest but crowd your router."]],
+ verdict:"One plug, one bulb, one security device. If you love them after a month, expand. If not, you're out less than a dinner."
+},
+"choose-blender":{
+ intro:"A blender that's wrong for your habits is just a heavy paperweight with a cord. Match the machine to what you actually blend — and your budget can shrink dramatically.",
+ quickAnswer:"Daily smoothies with frozen fruit? Get a 1000W+ full-size blender. Single-serve shakes? A personal blender is cheaper and easier to clean. Only buy a high-performance blender if you regularly crush ice, nuts, or make hot soups.",
+ toc:["Match the blender to the job","Wattage and blade design","The cleanup factor","Demo comparison table","Frequently asked questions","Final recommendations"],
+ sections:[
+  {h:"Match the blender to the job",p:"Three jobs, three machines: personal blenders (14–24 oz cups, blend-and-go) for one person; full-size pitchers (64 oz) for families; high-performance units (2+ hp) for nut butters, milling, and silk-smooth purees. Buying above your job wastes money; buying below it burns out motors.",list:["Smoothies solo: personal blender, 300–600W","Family smoothies & sauces: full-size, 1000W+","Nut butters / ice crushing: 1500W+ high-performance"]},
+  {h:"Wattage and blade design",p:"Wattage matters most for frozen loads — frozen fruit stalls weak motors. Blade design matters for texture: blunt, thick blades pulverize; sharp thin blades slice. For smoothies, blunt is better."},
+  {h:"The cleanup factor",p:"The blender you'll use is the one you can clean in 30 seconds. Dishwasher-safe jars, blades that unscrew easily, and no gasket crevices where smoothie cement forms. Personal blenders win here — you drink from the blending cup."}
+ ],
+ tableTitle:"Demo comparison: blenders",
+ table:[["Product (demo)","Best For","Key Feature","Rating","Price Range"],
+        ["DemoBlend Solo","Single shakes","Blend-and-go cup","????? 4.3","$25–$40"],
+        ["DemoBlend Family 1200","Daily smoothies","1200W, 64 oz jar","????? 4.5","$70–$110"],
+        ["DemoBlend Pro HP","Nut butters","2.2 hp motor","????? 4.7","$300–$450"]],
+ faqs:[["Can a personal blender crush ice?","Most handle a cube or two; few handle a full load. If iced drinks are your daily habit, step up to a full-size machine."],
+       ["How long should a blender last?","A mid-range blender used daily should last 5–7 years. Burnt smell under load means you're asking too much of the motor — blend in shorter pulses."]],
+ verdict:"Buy for your heaviest weekly use, not your dreamiest. The mid-range full-size is the sweet spot for most households."
+}
+};
+
+/* ---------- C. HELPERS ---------- */
+function $(s,c){return (c||document).querySelector(s)}
+function el(html){var t=document.createElement("template");t.innerHTML=html.trim();return t.content.firstChild}
+
+/* Decorative inline SVG "photo" placeholder — swap for real <img> with
+   descriptive alt text when you have product photography. */
+function cardArt(hue,label){
+  return '<svg viewBox="0 0 400 250" role="img" aria-label="'+label+'">'+
+    '<rect width="400" height="250" fill="'+hue+'"/>'+
+    '<rect width="400" height="250" fill="#000" opacity="0.14"/>'+
+    '<circle cx="200" cy="112" r="52" fill="#ffffff" opacity="0.28"/>'+
+    '<rect x="128" y="148" width="144" height="12" rx="6" fill="#ffffff" opacity="0.4"/>'+
+    '<text x="200" y="120" text-anchor="middle" font-family="Georgia,serif" font-size="19" fill="#ffffff">'+label+'</text></svg>';
+}
+
+function articleCard(a){
+  return '<article class="card">'+
+    '<a class="card-img" href="#/article/'+a.slug+'" aria-label="Read: '+a.title+'">'+cardArt(a.hue,a.category)+
+      '<span class="badge">'+a.tag+'</span></a>'+
+    '<div class="card-body">'+
+      '<h3><a href="#/article/'+a.slug+'">'+a.title+'</a></h3>'+
+      '<p class="excerpt">'+a.excerpt+'</p>'+
+      '<div class="card-meta"><span>'+a.category+'</span>'+
+        '<span class="read-time"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+a.readTime+' min read</span></div>'+
+      '<a class="btn btn-outline btn-sm" href="#/article/'+a.slug+'">Read Guide</a>'+
+    '</div></article>';
+}
+
+function renderGrid(sel,items){
+  var g=$(sel); if(!g) return;
+  g.innerHTML=""; items.forEach(function(a){g.appendChild(el(articleCard(a)))});
+}
+
+/* ---------- D. CARD GRIDS ---------- */
+(function buildCards(){
+  /* categories */
+  var cg=$("#categoryGrid");
+  CATEGORIES.forEach(function(c){
+    cg.appendChild(el('<article class="card">'+
+      '<a class="card-img" href="#/kitchen" aria-label="Explore '+c.name+'">'+cardArt(c.hue,c.name)+'</a>'+
+      '<div class="card-body"><h3>'+c.name+'</h3><p class="excerpt">'+c.desc+'</p>'+
+      '<a class="btn btn-outline btn-sm" href="#/kitchen">Explore</a></div></article>'));
+  });
+  renderGrid("#featuredGuides", ARTICLES.slice(0,6));
+  renderGrid("#latestArticles", ARTICLES.slice(2,8));
+  renderGrid("#allGuides", ARTICLES);
+  renderGrid('[data-category-grid="Kitchen"]', ARTICLES.filter(function(a){return a.category==="Kitchen"}));
+  renderGrid("#relatedCategories", ARTICLES.filter(function(a){return a.category!=="Kitchen"}).slice(0,3));
+})();
+
+/* ---------- E. PRODUCT REVIEW CARDS ---------- */
+(function buildReviews(){
+  var products=[
+    {name:"DemoAir Compact 2.1 Qt Air Fryer",best:"Best for tiny kitchens",hue:"#c96f3b",
+     desc:"A genuinely small air fryer that still cooks a proper portion for two. Simple dial controls, dishwasher-safe basket, and an honest footprint spec.",
+     features:["2.1 qt capacity","8-inch counter footprint","Dishwasher-safe basket","Manual dial controls"],
+     pros:["Truly compact","Fast pre-heat","Easy to clean"],cons:["Too small for families","No keep-warm mode"],
+     buy:"Singles, couples, and dorm dwellers who want crispy food without surrendering counter space.",
+     skip:"Families of three or more — you'll cook in endless batches."},
+    {name:"DemoBot Pet Pro Robot Vacuum",best:"Best for pet owners",hue:"#3a6ea5",
+     desc:"LiDAR-mapped navigation with a self-emptying base, rubber brush roll, and HEPA filtration — the features that matter when fur is a lifestyle.",
+     features:["LiDAR room mapping","Self-empty base (60 days)","Rubber brush roll","HEPA filter"],
+     pros:["Handles pet hair well","Low day-to-day maintenance","Works in the dark"],cons:["Premium price","Base needs floor space"],
+     buy:"Pet owners in multi-room homes who want set-and-forget floor care.",
+     skip:"Small apartments — a simple random-navigation bot does the job for half the price."},
+    {name:"DemoBrew Thermal 12-Cup Coffee Maker",best:"Best for busy households",hue:"#6b4226",
+     desc:"A no-gimmick drip machine with a thermal carafe that keeps coffee hot for two hours without cooking it bitter.",
+     features:["12-cup thermal carafe","Showerhead extraction","Programmable start","Fits travel mugs"],
+     pros:["Coffee stays fresh-tasting","Reliable and simple","Good value"],cons:["Carafe pours slowly at first","No single-cup option"],
+     buy:"Households that brew a pot on weekday mornings and want it to taste good at cup three.",
+     skip:"Single-cup pour-over purists."}
+  ];
+  var host=$("#reviewCards");
+  products.forEach(function(p,i){
+    host.parentNode.insertBefore(el(
+      '<article class="product-card">'+
+      '<div class="product-card-inner">'+
+        '<div class="product-visual">'+cardArt(p.hue,"Demo product photo")+'</div>'+
+        '<div>'+
+          '<span class="best-for">'+p.best+'</span>'+
+          '<h2 style="font-size:1.35rem;margin-bottom:.4rem">'+p.name+'</h2>'+
+          '<p class="small muted" style="margin-bottom:1rem">Demo product — placeholder data until full review is published.</p>'+
+          '<p style="margin-bottom:1rem">'+p.desc+'</p>'+
+          '<h3 style="font-size:.95rem;margin-bottom:.4rem">Key features</h3>'+
+          '<ul style="margin-bottom:1.2rem">'+p.features.map(function(f){return "<li>"+f+"</li>"}).join("")+'</ul>'+
+          '<div class="procons">'+
+            '<div class="pros"><h4>Pros</h4><ul>'+p.pros.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div>'+
+            '<div class="cons"><h4>Cons</h4><ul>'+p.cons.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div>'+
+          '</div>'+
+          '<p class="small" style="margin-bottom:.3rem"><strong>Who should buy it:</strong> '+p.buy+'</p>'+
+          '<p class="small" style="margin-bottom:1.2rem"><strong>Who should skip it:</strong> '+p.skip+'</p>'+
+          '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">'+
+            '<a class="btn btn-primary" href="YOUR_AMAZON_AFFILIATE_LINK" rel="nofollow sponsored noopener" target="_blank">Check Price</a>'+
+            '<span class="stars" aria-label="Demo rating">????? <span class="muted small">4.3 (demo)</span></span>'+
+          '</div>'+
+        '</div>'+
+      '</div></article>'), host);
+  });
+  host.remove();
+})();
+
+/* ---------- F. ROUTER ---------- */
+var PAGES=["home","kitchen","guides","reviews","comparisons","article","about","contact","disclosure","privacy","terms"];
+
+function renderArticle(slug){
+  var a=null; ARTICLES.forEach(function(x){if(x.slug===slug)a=x});
+  var c=ARTICLE_CONTENTS[slug];
+  if(!a||!c){location.hash="#/";return}
+  /* breadcrumbs + JSON-LD (Article schema) */
+  $("#articleCrumbs").innerHTML='<a href="#/">Home</a> / <a href="#/'+(
+    a.category==="Kitchen"?"kitchen":"guides")+'">'+a.category+'</a> / '+a.title;
+  var ld=document.getElementById("articleJsonLd");
+  if(!ld){ld=document.createElement("script");ld.type="application/ld+json";ld.id="articleJsonLd";
+         document.head.appendChild(ld)}
+  ld.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Article",
+    "headline":a.title,"description":a.excerpt,"author":{"@type":"Organization","name":"SmartHomeGuide"},
+    "publisher":{"@type":"Organization","name":"SmartHomeGuide"},
+    "datePublished":"2026","dateModified":"2026","mainEntityOfPage":"https://www.smarthomeguide.com/#/article/"+slug});
+
+  /* build body */
+  var h='<header class="article-hero" style="padding-bottom:0">'+
+    '<span class="badge">'+a.tag+'</span>'+
+    '<h1 style="margin-top:.8rem">'+a.title+'</h1>'+
+    '<div class="meta">'+
+      '<span class="author-chip"><span class="avatar">SH</span>SmartHomeGuide Editorial Team</span>'+
+      '<span>Published '+a.date+'</span><span>Updated '+a.updated+'</span>'+
+      '<span>'+a.readTime+' min read</span></div>'+
+    '<div class="featured-img">'+cardArt(a.hue,"Featured image: "+a.title)+'</div>'+
+    '<p style="font-size:1.06rem">'+c.intro+'</p>'+
+    '<div class="quick-box"><strong>Quick answer:</strong> '+c.quickAnswer+'</div>'+
+    '<div class="disclosure"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>'+
+    '<span><strong>Affiliate disclosure:</strong> purchases made through links in this guide may earn us a commission at no additional cost to you.</span></div>'+
+    '<nav class="toc" aria-label="Table of contents"><strong>On this page</strong><ol>'+
+      c.toc.map(function(t,i){return '<li><a href="#article-sec-'+i+'">'+t+'</a></li>'}).join("")+
+    '</ol></nav></header>';
+
+  c.sections.forEach(function(s,i){
+    h+='<h2 id="article-sec-'+i+'">'+s.h+'</h2><p>'+s.p+'</p>';
+    if(s.list)h+='<ul>'+s.list.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>';
+    if(i===2){ /* comparison table after third section */
+      h+='<h3>'+c.tableTitle+'</h3>'+
+         '<div class="table-scroll"><table class="comparison"><thead><tr>'+
+         c.table[0].map(function(x){return '<th scope="col">'+x+'</th>'}).join("")+
+         '</tr></thead><tbody>'+
+         c.table.slice(1).map(function(r){
+           return '<tr><td><strong>'+r[0]+'</strong></td><td>'+r[1]+'</td><td>'+r[2]+
+             '</td><td class="stars">'+r[3]+'</td><td>'+r[4]+'</td>'+
+             '<td><a class="btn btn-primary btn-sm" href="YOUR_AMAZON_AFFILIATE_LINK" rel="nofollow sponsored noopener" target="_blank">Check Price</a></td></tr>'
+         }).join("")+'</tbody></table></div>';
+    }
+  });
+
+  h+='<h2 id="article-sec-'+c.sections.length+'">Frequently Asked Questions</h2>';
+  c.faqs.forEach(function(f,i){
+    h+='<div class="faq-item"><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div>';
+  });
+
+  var vIdx=c.sections.length+1;
+  h+='<h2 id="article-sec-'+vIdx+'">Final Recommendations</h2>'+
+     '<div class="quick-box"><strong>Our verdict:</strong> '+c.verdict+'</div>'+
+     '<p class="small muted">Demo guide with placeholder products. Replace product data with your own researched picks before publishing, and keep each claim honest and verifiable.</p>';
+
+  $("#articleContent").innerHTML=h;
+  document.title=a.title+" | SmartHomeGuide";
+
+  /* related articles */
+  var rel=ARTICLES.filter(function(x){return x.slug!==slug}).slice(0,5);
+  $("#relatedBox").innerHTML='<h3>Related Articles</h3>'+
+    rel.map(function(x){return '<a href="#/article/'+x.slug+'">'+x.title+'</a>'}).join("");
+
+  /* FAQ accordion */
+  document.querySelectorAll(".faq-item h3").forEach(function(q){
+    q.setAttribute("tabindex","0");q.setAttribute("role","button");
+    q.setAttribute("aria-expanded","false");
+    function toggle(){var it=q.parentElement,open=it.classList.toggle("open");
+      q.setAttribute("aria-expanded",open)}
+    q.addEventListener("click",toggle);
+    q.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle()}});
+  });
+}
+
+function router(){
+  var hash=location.hash.replace(/^#\/?/,"")||"home";
+  var parts=hash.split("/");
+  var page=parts[0]||"home";
+  if(page==="article"){renderArticle(parts[1])}
+  else if(PAGES.indexOf(page)===-1){page="home"}
+  else{
+    var titles={home:"SmartHomeGuide — Smarter Choices for Your Home & Kitchen",
+      kitchen:"Kitchen Guides | SmartHomeGuide",guides:"Buying Guides | SmartHomeGuide",
+      reviews:"Product Reviews | SmartHomeGuide",comparisons:"Product Comparisons | SmartHomeGuide",
+      about:"About | SmartHomeGuide",contact:"Contact | SmartHomeGuide",
+      disclosure:"Affiliate Disclosure | SmartHomeGuide",privacy:"Privacy Policy | SmartHomeGuide",
+      terms:"Terms of Use | SmartHomeGuide"};
+    document.title=titles[page];
+  }
+  document.querySelectorAll(".page").forEach(function(p){
+    p.classList.toggle("active",p.dataset.page===page)});
+  document.querySelectorAll("[data-nav]").forEach(function(a){
+    a.classList.toggle("active",a.dataset.nav===page)});
+  closeMobileNav();
+  window.scrollTo({top:0,behavior:"instant" in window?"instant":"auto"});
+}
+window.addEventListener("hashchange",router);
+
+/* ---------- G. MOBILE NAV ---------- */
+var burger=$("#hamburger"),mnav=$("#mobileNav");
+function closeMobileNav(){mnav.classList.remove("open");burger.classList.remove("open");
+  burger.setAttribute("aria-expanded","false")}
+burger.addEventListener("click",function(){
+  var open=mnav.classList.toggle("open");
+  burger.classList.toggle("open",open);
+  burger.setAttribute("aria-expanded",open);
+});
+mnav.addEventListener("click",function(e){if(e.target.tagName==="A")closeMobileNav()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeMobileNav();closeSearch()}});
+
+/* ---------- H. SEARCH (search.js) ---------- */
+var overlay=$("#searchOverlay"),input=$("#searchInput"),results=$("#searchResults");
+function openSearch(){overlay.classList.add("open");input.value="";renderResults("");
+  setTimeout(function(){input.focus()},50)}
+function closeSearch(){overlay.classList.remove("open")}
+$("#searchBtn").addEventListener("click",openSearch);
+overlay.addEventListener("click",function(e){if(e.target===overlay)closeSearch()});
+input.addEventListener("input",function(){renderResults(this.value)});
+input.addEventListener("keydown",function(e){if(e.key==="Escape")closeSearch()});
+
+function renderResults(q){
+  q=q.trim().toLowerCase();
+  var pool=ARTICLES.slice();
+  /* include categories as searchable entries */
+  CATEGORIES.forEach(function(c){pool.push({slug:"kitchen",title:c.name,category:"Category",
+    excerpt:c.desc,tag:"Category",searchOnly:true})});
+  var hits=pool.filter(function(a){
+    if(!q)return true;
+    return (a.title+" "+a.category+" "+a.excerpt+" "+(a.tag||"")).toLowerCase().indexOf(q)>-1;
+  });
+  if(!hits.length){results.innerHTML='<p class="small muted" style="padding:.6rem .4rem">No matches. Try "kettle", "vacuum", or "storage".</p>';return}
+  results.innerHTML=hits.slice(0,10).map(function(a){
+    var href=a.searchOnly?"#/kitchen":"#/article/"+a.slug;
+    return '<a class="search-result" href="'+href+'"><span class="badge">'+(a.tag||a.category)+'</span><strong>'+a.title+'</strong><small>'+a.excerpt+'</small></a>';
+  }).join("");
+  results.querySelectorAll("a").forEach(function(a){a.addEventListener("click",closeSearch)});
+}
+
+/* ---------- I. FORMS (demo handlers) ---------- */
+$("#newsletterForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var em=$("#newsletterEmail");
+  if(!em.value||em.value.indexOf("@")<0){em.focus();em.style.border="2px solid #d97706";return}
+  em.style.border="";this.reset();
+  $("#newsletterNote").textContent="? Subscribed! (Demo — connect your email provider before launch.)";
+});
+$("#contactForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var f=e.target,ok=true;
+  f.querySelectorAll("[required]").forEach(function(fi){
+    if(!fi.value.trim()){fi.style.border="2px solid #d97706";ok=false}
+    else{fi.style.border=""}});
+  if(!ok)return;
+  $("#contactSuccess").style.display="block";f.reset();
+});
+
+/* ---------- J. MISC ---------- */
+$("#year").textContent=new Date().getFullYear();
+router(); /* initial route */
+})();
+</script>
+</body>
+</html>
